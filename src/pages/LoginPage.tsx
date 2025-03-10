@@ -93,7 +93,7 @@ const LoginPage = () => {
           <Typography variant="body2" sx={{ mt: 2, color: 'gray' }}>
             Dont have account?
             <a href="#" style={{ marginLeft: 3 }}>
-              <Link to="/">Register Here </Link>
+              <Link to="/">SignUp </Link>
             </a>
           </Typography>
         </Box>

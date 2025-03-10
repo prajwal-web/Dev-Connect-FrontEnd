@@ -80,6 +80,7 @@ const RegisterPage = () => {
           <Typography variant="body2" sx={{ mt: 2, color: 'gray' }}>
             Already have an account?{' '}
             <a href="#">
+              {' '}
               <Link to="/login">Sign in </Link>
             </a>
           </Typography>
