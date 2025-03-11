@@ -1,8 +1,50 @@
-import { Box, Typography, TextField, Button } from '@mui/material';
+import { Box, Typography, TextField, Button, CircularProgress, useTheme } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
+import { useState } from 'react';
+import { useCookies } from 'react-cookie';
 
 const LoginPage = () => {
+  const theme = useTheme();
+  const navigate = useNavigate();
+  const [cookies, setCookie] = useCookies(['name']);
+  console.log(cookies);
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleSubmit = async () => {
+    if (email && password) {
+      setLoading(true);
+      const response = await fetch('https://dev-connect-service.onrender.com/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password
+        })
+      });
+
+      const jsonData = await response.json();
+      if (response.ok && jsonData.token) {
+        setCookie('name', jsonData.token);
+        setError('');
+        setEmail('');
+        setPassword('');
+        navigate('/posts', { state: jsonData.token });
+      } else {
+        setError(jsonData.message || 'Login failed. Please try again.');
+      }
+      setLoading(false);
+    } else {
+      setError('All fields are required.');
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -10,7 +52,7 @@ const LoginPage = () => {
         justifyContent: 'center',
         alignItems: 'center',
         minHeight: '100vh',
-        background: 'linear-gradient(to right, #1e3c72, rgb(213, 106, 240))',
+        // background: 'linear-gradient(to right, #1e3c72, rgb(213, 106, 240))',
         width: '100%',
         margin: 0,
         padding: 0
@@ -19,10 +61,13 @@ const LoginPage = () => {
       <Box
         sx={{
           width: { xs: '90%', sm: '80%', md: '60%', lg: 800 },
-          bgcolor: 'white',
+          // bgcolor: 'white',
           p: { xs: 2, sm: 4 },
           borderRadius: 2,
-          boxShadow: 3,
+          boxShadow:
+            theme.palette.mode === 'dark'
+              ? '0px 4px 10px rgba(255, 255, 255, 0.1), 0px 2px 5px rgba(255, 255, 255, 0.2)'
+              : '0px 4px 10px rgba(0, 0, 0, 0.1), 0px 2px 5px rgba(0, 0, 0, 0.2)',
           textAlign: 'center',
           display: 'flex',
           flexDirection: { xs: 'column', sm: 'row' },
@@ -56,6 +101,8 @@ const LoginPage = () => {
             User Login
           </Typography>
           <TextField
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             margin="normal"
             variant="standard"
             label="Email ID"
@@ -67,6 +114,8 @@ const LoginPage = () => {
             }}
           />
           <TextField
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             margin="normal"
             variant="standard"
             label="Password"
@@ -77,7 +126,15 @@ const LoginPage = () => {
               mx: 'auto'
             }}
           />
+
+          {error && (
+            <Typography variant="body2" sx={{ mt: 2, color: 'red' }}>
+              {error}
+            </Typography>
+          )}
+
           <Button
+            onClick={handleSubmit}
             variant="contained"
             color="success"
             sx={{
@@ -86,15 +143,14 @@ const LoginPage = () => {
               width: { xs: '80%', sm: 200, lg: 300 },
               mx: 'auto'
             }}
-            endIcon={<LoginIcon />}
+            endIcon={loading ? <CircularProgress size={20} color="inherit" /> : <LoginIcon />}
+            disabled={loading}
           >
-            Login
+            {loading ? 'Logging in...' : 'Login'}
           </Button>
+
           <Typography variant="body2" sx={{ mt: 2, color: 'gray' }}>
-            Dont have account?
-            <a href="#" style={{ marginLeft: 3 }}>
-              <Link to="/">SignUp </Link>
-            </a>
+            Don't have an account? <Link to="/register">Sign Up</Link>
           </Typography>
         </Box>
       </Box>
