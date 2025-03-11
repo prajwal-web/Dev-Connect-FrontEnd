@@ -1,36 +1,83 @@
-// /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from 'react';
+
+const useApiRequest = (url: string, method = 'GET') => {
+  const [data, setData] = useState<any>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const getData = async (options: any = {}) => {
+    setLoading(true);
+    const token = window.localStorage.getItem('token');
+    const res = await fetch(url, {
+      method,
+      ...options,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    const data = await res.json();
+    setData(data);
+    setLoading(false);
+  };
+
+  const deleteData = async () => {
+    const token = window.localStorage.getItem('token');
+    const res = await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    if (res.ok) {
+      return true;
+    } else {
+      const error = await res.json();
+      throw new Error(error.message || 'Failed to delete employee');
+    }
+  };
+
+  return { data, loading, getData, deleteData };
+};
+
+export default useApiRequest;
+
 // import { useState } from 'react';
+// import { Cookies, useCookies } from 'react-cookie';
 
-// const useApiRequest = (url: string, method = 'GET') => {
-//   const [data, setData] = useState<any>(null);
-//   const [loading, setLoading] = useState<boolean>(false);
-//   const [error, setError] = useState<any>(null);
+// const useApiRequest = (url: string, method = 'POST') => {
+//   const [data, setData] = useState(null);
+//   const [loading, setLoading] = useState(false);
+//   const [error, setError] = useState('');
+//   const [cookie, setCookie] = useCookies(['name']);
+//   console.log(cookie);
 
-//   const getData = async (options: any = {}) => {
+//   const getData = async (body: any) => {
 //     setLoading(true);
-//     setError(null);
+//     const token = Cookies.get('name');
 //     try {
-//       const token = window.localStorage.getItem('token');
 //       const res = await fetch(url, {
 //         method,
 //         headers: {
 //           'Content-Type': 'application/json',
-//           Authorization: token ? `Bearer ${token}` : '',
-//           ...options.headers
+//           Authorization: `Bearer ${token}`
 //         },
-//         body: method === 'POST' || method === 'PUT' ? JSON.stringify(options.body) : undefined
+//         body: JSON.stringify(body)
 //       });
-//       if (!res.ok) {
-//         throw new Error(`HTTP error! Status: ${res.status}`);
-//       }
 
-//       const jsonData = await res.json();
-//       setData(jsonData);
+//       const data = await res.json();
+//       if (res.ok) {
+//         setData(data);
+//       } else {
+//         setError(data.message || 'Something went wrong.');
+//       }
 //     } catch (err) {
-//       setError(err.message || 'Something went wrong!');
-//     } finally {
-//       setLoading(false);
+//       setError('An error occurred. Please try again later.');
 //     }
+//     setLoading(false);
 //   };
 
 //   return { data, loading, error, getData };

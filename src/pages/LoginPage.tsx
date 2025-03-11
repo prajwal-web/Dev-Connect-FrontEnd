@@ -52,7 +52,6 @@ const LoginPage = () => {
         justifyContent: 'center',
         alignItems: 'center',
         minHeight: '100vh',
-        // background: 'linear-gradient(to right, #1e3c72, rgb(213, 106, 240))',
         width: '100%',
         margin: 0,
         padding: 0
@@ -61,7 +60,6 @@ const LoginPage = () => {
       <Box
         sx={{
           width: { xs: '90%', sm: '80%', md: '60%', lg: 800 },
-          // bgcolor: 'white',
           p: { xs: 2, sm: 4 },
           borderRadius: 2,
           boxShadow:
@@ -154,6 +152,7 @@ const LoginPage = () => {
           </Typography>
         </Box>
       </Box>
+      <div></div>
     </Box>
   );
 };
