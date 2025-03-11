@@ -157,4 +157,124 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+// export default LoginPage;
+// import { useState } from 'react'
+// import { useNavigate } from 'react-router-dom'
+// import { useCookies } from 'react-cookie'
+
+// export const useLogin = () => {
+//   const navigate = useNavigate()
+//   const [cookies, setCookie] = useCookies(['token'])
+//   const [loading, setLoading] = useState(false)
+//   const [error, setError] = useState<string | null>(null)
+
+//   const handleLogin = async (email: string, password: string) => {
+//     setLoading(true)
+//     setError(null)
+
+//     try {
+//       const response = await fetch('https://dev-connect-service.onrender.com/api/auth/login', {
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify({ email, password })
+//       })
+
+//       const jsonData = await response.json()
+//       if (response.ok && jsonData.token) {
+//         setCookie('token', jsonData.token)
+//         navigate('/posts', { state: jsonData.token })
+//       } else {
+//         setError(jsonData.message || 'Login failed. Please try again.')
+//       }
+//     } catch (err) {
+//       setError('An unexpected error occurred.')
+//     } finally {
+//       setLoading(false)
+//     }
+//   }
+
+//   return { handleLogin, loading, error }
+// }
+
+// import { useState } from 'react'
+// import { Box, TextField, Button, Typography, CircularProgress } from '@mui/material'
+// import LoginIcon from '@mui/icons-material/Login'
+// import { Link } from 'react-router-dom'
+// import { useLogin } from '../../hooks/useLogin'
+
+// const LoginForm = () => {
+//   const { handleLogin, loading, error } = useLogin()
+//   const [email, setEmail] = useState('')
+//   const [password, setPassword] = useState('')
+
+//   const onSubmit = () => {
+//     if (email && password) {
+//       handleLogin(email, password)
+//     }
+//   }
+
+//   return (
+//     <Box sx={{ textAlign: 'center', maxWidth: 400, mx: 'auto', p: 3 }}>
+//       <Typography variant="h5" fontWeight="bold">User Login</Typography>
+      
+//       <TextField 
+//         label="Email" 
+//         type="email" 
+//         fullWidth 
+//         value={email} 
+//         onChange={(e) => setEmail(e.target.value)}
+//         sx={{ my: 2 }}
+//       />
+
+//       <TextField 
+//         label="Password" 
+//         type="password" 
+//         fullWidth 
+//         value={password} 
+//         onChange={(e) => setPassword(e.target.value)}
+//         sx={{ my: 2 }}
+//       />
+
+//       {error && <Typography color="error" sx={{ my: 1 }}>{error}</Typography>}
+
+//       <Button 
+//         variant="contained" 
+//         color="success" 
+//         fullWidth 
+//         onClick={onSubmit} 
+//         disabled={loading}
+//         endIcon={loading ? <CircularProgress size={20} color="inherit" /> : <LoginIcon />}
+//         sx={{ mt: 2 }}
+//       >
+//         {loading ? 'Logging in...' : 'Login'}
+//       </Button>
+
+//       <Typography sx={{ mt: 2 }}>
+//         Don't have an account? <Link to="/register">Sign Up</Link>
+//       </Typography>
+//     </Box>
+//   )
+// }
+
+// export default LoginForm
+
+// import { Box } from '@mui/material'
+// import LoginForm from '../components/auth/LoginForm'
+
+// const LoginPage = () => {
+//   return (
+//     <Box 
+//       sx={{
+//         display: 'flex', 
+//         justifyContent: 'center', 
+//         alignItems: 'center', 
+//         minHeight: '100vh', 
+//         bgcolor: '#f5f5f5'
+//       }}
+//     >
+//       <LoginForm />
+//     </Box>
+//   )
+// }
+
+// export default LoginPage
