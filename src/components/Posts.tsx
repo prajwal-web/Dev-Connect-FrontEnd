@@ -23,9 +23,8 @@ const Posts = () => {
         justifyContent: 'center'
       }}
     >
-      <Grid2 size={{ xs: 12, sm: 6, md: 4 }}>
+      <Grid2 size={{ xs: 12, sm: 6, md: 4 }} sx={{ marginTop: 2 }}>
         <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', boxShadow: 3 }}>
-          {/* <Box sx={{ height: 200, width: 200 }}> */}
           <Box
             component="img"
             sx={{
@@ -37,7 +36,6 @@ const Posts = () => {
             src="https://plus.unsplash.com/premium_photo-1741413932415-555e5c6a58f0?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="image"
           />
-          {/* </Box> */}
           <CardContent sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
             <Typography variant="h6" fontWeight="bold">
               Prajwal
@@ -62,7 +60,7 @@ const Posts = () => {
         </Card>
       </Grid2>
 
-      <Grid2 size={{ xs: 12, sm: 6, md: 4 }}>
+      <Grid2 size={{ xs: 12, sm: 6, md: 4 }} sx={{ marginTop: 2 }}>
         <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', boxShadow: 3 }}>
           <Box
             component="img"
@@ -99,7 +97,7 @@ const Posts = () => {
         </Card>
       </Grid2>
 
-      <Grid2 size={{ xs: 12, sm: 6, md: 4 }}>
+      <Grid2 size={{ xs: 12, sm: 6, md: 4 }} sx={{ marginTop: 2 }}>
         <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', boxShadow: 3 }}>
           <Box
             component="img"
@@ -136,7 +134,7 @@ const Posts = () => {
         </Card>
       </Grid2>
 
-      <Grid2 size={{ xs: 12, sm: 6, md: 4 }}>
+      <Grid2 size={{ xs: 12, sm: 6, md: 4 }} sx={{ marginTop: 2 }}>
         <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', boxShadow: 3 }}>
           <Box
             component="img"
