@@ -11,9 +11,10 @@ import '../styles/App.css';
 
 interface LogRegFormProps {
   setOpenModal: (open: boolean) => void;
+  setUserName: (name: string) => void;
 }
 
-const LogRegForm = ({ setOpenModal }: LogRegFormProps) => {
+const LogRegForm = ({ setOpenModal, setUserName }: LogRegFormProps) => {
   const [isLogin, setIsLogin] = useState(true);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
@@ -28,6 +29,7 @@ const LogRegForm = ({ setOpenModal }: LogRegFormProps) => {
         .then((value) => {
           console.log(value);
           if (value && value.token) {
+            setUserName(value.name);
             setSnackbarMessage('Login successful!');
             setOpenSnackbar(true);
             resetForm();
@@ -46,7 +48,6 @@ const LogRegForm = ({ setOpenModal }: LogRegFormProps) => {
     } else {
       handleRegister(values.username, values.email, values.password)
         .then((value) => {
-          console.log('register ' + value.name);
           if (value && values) {
             setSnackbarMessage('Registration successful!');
             setOpenSnackbar(true);
@@ -55,12 +56,12 @@ const LogRegForm = ({ setOpenModal }: LogRegFormProps) => {
               setIsLogin(true);
             }, 2000);
           } else {
-            setSnackbarMessage('Registration failed. Please try again1.');
+            setSnackbarMessage('Registration failed. Please try again.');
             setOpenSnackbar(true);
           }
         })
         .catch(() => {
-          setSnackbarMessage('Registration failed. user already exist.');
+          setSnackbarMessage('Registration failed. User already exists.');
           setOpenSnackbar(true);
         });
     }

@@ -6,6 +6,8 @@ import { useCookies } from 'react-cookie';
 export const useLogin = () => {
   const navigate = useNavigate();
   const [cookies, setCookie] = useCookies(['token']);
+  console.log(cookies);
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

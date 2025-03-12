@@ -4,7 +4,6 @@ import { BrowserRouter } from 'react-router';
 import AppRouter from './router/AppRouter';
 import Navbar from './ui/Navbar';
 import { useState, useEffect } from 'react';
-// import { Brightness4, Brightness7 } from '@mui/icons-material';
 import { darkTheme, lightTheme } from './theme/AppTheme';
 
 function App() {
@@ -27,9 +26,6 @@ function App() {
       <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
         <CssBaseline />
         <BrowserRouter>
-          {/* <IconButton sx={{ position: 'fixed', top: 60, right: 20 }} onClick={toggleTheme} color="inherit">
-            {isDarkMode ? <Brightness7 color="secondary" /> : <Brightness4 />}
-          </IconButton> */}
           <Navbar toggletheme={toggleTheme} isMode={isDarkMode} />
           <AppRouter />
         </BrowserRouter>

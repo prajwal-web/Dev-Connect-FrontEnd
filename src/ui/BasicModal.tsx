@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
@@ -15,7 +14,13 @@ const style = {
   boxShadow: 24
 };
 
-export default function BasicModal({ open, setOpen }: any) {
+interface BasicModalProps {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setUserName: (name: string) => void;
+}
+
+export default function BasicModal({ open, setOpen, setUserName }: BasicModalProps) {
   const handleClose = () => setOpen(false);
 
   return (
@@ -36,7 +41,7 @@ export default function BasicModal({ open, setOpen }: any) {
             }}
             onClick={handleClose}
           />
-          <LogRegForm setOpenModal={setOpen} />
+          <LogRegForm setOpenModal={setOpen} setUserName={setUserName} />
         </Box>
       </Modal>
     </Box>
