@@ -7,7 +7,7 @@ const Protected = () => {
   const [cookies] = useCookies(['name']);
   useEffect(() => {
     if (!cookies.name) {
-      navigate('/');
+      navigate('/posts');
     }
   }, [cookies, navigate]);
   return (

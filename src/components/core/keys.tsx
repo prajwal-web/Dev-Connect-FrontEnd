@@ -6,3 +6,4 @@ const API_KEYS = {
 };
 
 export default API_KEYS;
+// `${import.meta.env.VITE_HOST_URL}${API_KEYS.employees}/${employee.id}`,

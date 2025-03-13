@@ -2,9 +2,14 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useCookies } from 'react-cookie';
+import { useUserProfile } from '../userProfile/useUserProfile';
+// import API_KEYS from '../../components/core/keys';
 
 export const useLogin = () => {
   const navigate = useNavigate();
+  const { profile } = useUserProfile();
+  console.log('profile ' + profile);
+
   const [cookies, setCookie] = useCookies(['token']);
   console.log(cookies);
 
@@ -16,6 +21,8 @@ export const useLogin = () => {
     setError(null);
 
     try {
+      // `${import.meta.env.VITE_HOST_URL}${API_KEYS.employees}/${employee.id}`
+      // const response = await fetch(`${import.meta.env.VITE_HOST_URL}${API_KEYS.login}}`, {
       const response = await fetch('https://dev-connect-service.onrender.com/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

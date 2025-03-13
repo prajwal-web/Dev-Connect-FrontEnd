@@ -1,18 +1,18 @@
 import { Grid2, Card, CardContent, Typography, Box, IconButton, Divider } from '@mui/material';
-// import { useEffect } from 'react';
-// import { useCookies } from 'react-cookie';
-// import { useNavigate } from 'react-router';
+import { useEffect } from 'react';
+import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router';
 import { ThumbUp, ChatBubble } from '@mui/icons-material';
 
 const Posts = () => {
-  //   const navigate = useNavigate();
-  //   const [cookies] = useCookies(['name']);
+  const navigate = useNavigate();
+  const [cookies] = useCookies(['token']);
 
-  //   useEffect(() => {
-  //     if (!cookies.name) {
-  //       navigate('/');
-  //     }
-  //   }, [cookies, navigate]);
+  useEffect(() => {
+    if (!cookies.token) {
+      navigate('/posts');
+    }
+  }, [cookies, navigate]);
 
   return (
     <Grid2

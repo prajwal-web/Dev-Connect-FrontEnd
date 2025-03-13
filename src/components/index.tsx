@@ -14,12 +14,12 @@ const IndexPage = () => {
     if (data) {
       setCookie('name', data.token);
     }
-
     if (cookies.name) {
       async function Posts() {
         try {
           const response = await fetch('https://dev-connect-service.onrender.com/api/posts?page=1&limit=10');
           const allPosts = await response.json();
+          console.log('allposts ' + allPosts);
           navigate('/posts', { state: allPosts });
         } catch (error) {
           console.error('Error fetching posts:', error);
@@ -27,7 +27,7 @@ const IndexPage = () => {
       }
       Posts();
     } else {
-      navigate('/register');
+      navigate('/posts');
     }
   }, [cookies.name, navigate, data, setCookie]);
 
