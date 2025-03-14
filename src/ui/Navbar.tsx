@@ -46,16 +46,18 @@ export default function Navbar({ toggletheme, isMode }: NavbarProps) {
           </Typography>
 
           {cookies.token && userName ? (
-            <Typography color="inherit" sx={{ flexGrow: 1, textAlign: 'right', marginRight: 2 }}>
-              Welcome , {userName}
-            </Typography>
+            <>
+              <Typography color="inherit" sx={{ flexGrow: 1, textAlign: 'right', marginRight: 2 }}>
+                Welcome , {userName}
+              </Typography>
+            </>
           ) : (
-            <Button color="inherit" onClick={handleOpenModal}>
+            <Button color="inherit" onClick={handleOpenModal} sx={{ borderBottom: '1px solid black', marginRight: 3 }}>
               Login
             </Button>
           )}
           <Tooltip title={isMode ? 'Enable Light Mode' : 'Enable Dark Mode'}>
-            <IconButton onClick={toggletheme} color="inherit">
+            <IconButton onClick={toggletheme} color="inherit" sx={{ marginRight: 3 }}>
               {isMode ? <Brightness7 color="secondary" /> : <Brightness4 />}
             </IconButton>
           </Tooltip>

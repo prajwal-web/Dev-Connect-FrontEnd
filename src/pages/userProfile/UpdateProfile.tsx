@@ -55,7 +55,7 @@ const UpdateProfile = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="md" sx={{ marginBottom: 2 }}>
       <Typography variant="h5" gutterBottom>
         Update Profile
       </Typography>
@@ -142,7 +142,7 @@ const UpdateProfile = () => {
               <Typography variant="h6" gutterBottom>
                 Experience
               </Typography>
-              <Box sx={{ border: 1, borderColor: 'grey.400', p: 2, mb: 2 }}>
+              <Box sx={{ border: 1, borderColor: 'gray', p: 2, mb: 2 }}>
                 <Grid2 container spacing={2}>
                   {values.experience.map((exp: any, index: any) => (
                     <React.Fragment key={index}>
@@ -289,7 +289,13 @@ const UpdateProfile = () => {
                 <input type="file" hidden />
               </Button> */}
               <Box display="flex" flexDirection="row" alignItems="center" gap={2}>
-                <Button component="label" variant="outlined" startIcon={<CloudUploadIcon />} sx={{ height: '30px' }}>
+                <Button
+                  component="label"
+                  variant="outlined"
+                  color="inherit"
+                  startIcon={<CloudUploadIcon />}
+                  sx={{ height: '30px' }}
+                >
                   choose a file
                   <VisuallyHiddenInput type="file" onChange={handleFileChange} />
                 </Button>

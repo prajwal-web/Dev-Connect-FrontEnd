@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router';
 import { ThumbUp, ChatBubble } from '@mui/icons-material';
+import CreatePosts from './CreatePosts';
 
 const Posts = () => {
   const navigate = useNavigate();
@@ -170,6 +171,7 @@ const Posts = () => {
           </CardContent>
         </Card>
       </Grid2>
+      <CreatePosts />
     </Grid2>
   );
 };
