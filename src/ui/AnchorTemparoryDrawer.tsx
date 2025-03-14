@@ -59,7 +59,11 @@ export default function AnchorTemporaryDrawer({ openDrawer, setOpenDrawer }: Anc
           </ListItem>
         ))} */}
         <ListItem key="Update Profile" disablePadding>
-          <ListItemButton>
+          <ListItemButton
+            onClick={() => {
+              navigate('/updateProfile');
+            }}
+          >
             <ListItemIcon>
               <UpdateIcon />
             </ListItemIcon>

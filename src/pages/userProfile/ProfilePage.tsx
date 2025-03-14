@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Box, CircularProgress, Typography, Card, CardContent, Tooltip, IconButton } from '@mui/material';
+import { Box, CircularProgress, Typography, Card, CardContent, Tooltip, IconButton, Grid2 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import EditNoteIcon from '@mui/icons-material/EditNote';
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 
 interface ProfilePageProps {
   user?: any;
@@ -94,7 +94,7 @@ const ProfilePage = ({ user }: ProfilePageProps) => {
     >
       <Card
         sx={{
-          width: { xs: 300, sm: 500, lg: 480 },
+          width: { xs: 300, sm: 700, lg: 800 },
           borderRadius: 3,
           boxShadow: 10,
           padding: 4,
@@ -105,56 +105,62 @@ const ProfilePage = ({ user }: ProfilePageProps) => {
           }
         }}
       >
-        <CardContent sx={{ position: 'relative', textAlign: 'center' }}>
-          <Box display="flex" justifyContent="center" mb={3}>
-            <Box
-              component="img"
-              sx={{
-                height: 200,
-                width: 200,
-                borderRadius: '50%',
-                objectFit: 'cover',
-                boxShadow: 6,
-                border: '5px solid white'
-              }}
-              alt="User Avatar"
-              src="https://plus.unsplash.com/premium_photo-1741413932415-555e5c6a58f0?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            />
-          </Box>
+        <CardContent sx={{ position: 'relative' }}>
+          <Grid2 container spacing={3} alignItems="center">
+            <Grid2 size={{ xs: 12, sm: 4 }} display="flex" justifyContent="center">
+              <Box
+                component="img"
+                sx={{
+                  height: 200,
+                  width: 200,
+                  borderRadius: '50%',
+                  objectFit: 'cover',
+                  boxShadow: 6,
+                  border: '5px solid white'
+                }}
+                alt="User Avatar"
+                src="https://plus.unsplash.com/premium_photo-1741413932415-555e5c6a58f0?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              />
+            </Grid2>
 
-          <Typography variant="h4" color="text.primary" fontWeight="bold" gutterBottom>
-            {userData.name}
-          </Typography>
+            <Grid2 size={{ xs: 12, sm: 8 }}>
+              <Typography variant="h4" color="text.primary" fontWeight="bold" gutterBottom>
+                {userData.name}
+              </Typography>
 
-          <Typography variant="h6" color="text.secondary" gutterBottom>
-            {userData.email}
-          </Typography>
+              <Typography variant="h6" color="text.secondary" gutterBottom>
+                {userData.email}
+              </Typography>
 
-          <Typography variant="body2" color="text.secondary" gutterBottom>
-            <strong>Last Updated:</strong> {new Date(userData.updatedAt).toLocaleDateString()}
-          </Typography>
+              <Typography variant="body2" color="text.secondary" gutterBottom>
+                <strong>Last Updated:</strong> {new Date(userData.updatedAt).toLocaleDateString()}
+              </Typography>
 
-          <Typography variant="body1" color="text.primary" gutterBottom>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis vitae nulla et eius dolor nostrum debitis
-            aliquam tempora inventore adipisci.
-          </Typography>
+              <Typography variant="body1" color="text.primary" gutterBottom>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis vitae nulla et eius dolor nostrum
+                debitis aliquam tempora inventore adipisci.
+              </Typography>
 
-          <Tooltip title="Edit Profile">
-            <IconButton
-              sx={{
-                position: 'absolute',
-                top: { xs: -20, lg: 5 },
-                right: 10,
-                backgroundColor: 'rgba(255, 255, 255, 0.8)',
-                '&:hover': {
-                  backgroundColor: 'rgba(255, 255, 255, 1)'
-                },
-                boxShadow: 3
-              }}
-            >
-              <EditNoteIcon color="primary" />
-            </IconButton>
-          </Tooltip>
+              <Tooltip title="Edit Profile">
+                <IconButton
+                  sx={{
+                    position: 'absolute',
+                    top: { xs: -20, lg: 5 },
+                    right: 10,
+                    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                    '&:hover': {
+                      backgroundColor: 'rgba(255, 255, 255, 1)'
+                    },
+                    boxShadow: 3
+                  }}
+                >
+                  <Link to="/updateprofile">
+                    <EditNoteIcon color="primary" />
+                  </Link>
+                </IconButton>
+              </Tooltip>
+            </Grid2>
+          </Grid2>
         </CardContent>
       </Card>
     </Box>

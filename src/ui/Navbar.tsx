@@ -9,6 +9,7 @@ import { Brightness4, Brightness7 } from '@mui/icons-material';
 import BasicModal from './BasicModal';
 import ProfileModal from '../pages/userProfile/ProfileModal';
 import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router';
 
 interface NavbarProps {
   toggletheme: () => void;
@@ -16,6 +17,7 @@ interface NavbarProps {
 }
 
 export default function Navbar({ toggletheme, isMode }: NavbarProps) {
+  const navigate = useNavigate();
   const [cookies, setCookie] = useCookies(['token', 'userName']);
   const [modalOpen, setModalOpen] = useState(false);
   const [userName, setUserName] = useState<string | null>(cookies.userName || null);
@@ -31,10 +33,15 @@ export default function Navbar({ toggletheme, isMode }: NavbarProps) {
   };
 
   return (
-    <Box sx={{ flexGrow: 1, position: 'fixed', width: '100%', marginTop: 0 }}>
+    <Box sx={{ flexGrow: 1, position: 'fixed', width: '100%', marginTop: 0, zIndex: 1000 }}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1, cursor: 'pointer' }}
+            onClick={() => navigate('/posts')}
+          >
             Blog Post
           </Typography>
 
