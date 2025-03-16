@@ -9,6 +9,8 @@ import { useState, useEffect } from 'react';
 import { darkTheme, lightTheme } from './theme/AppTheme';
 import { useCookies } from 'react-cookie';
 import securedFetch from './utils/securedfetch';
+import { Provider } from 'react-redux';
+import store from "./redux/store"
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -51,6 +53,7 @@ function App() {
   }, [cookies?.token]);
 
   return (
+    <Provider store={store}>
     <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
       <CssBaseline />
       <BrowserRouter>
@@ -58,6 +61,7 @@ function App() {
         <AppRouter user={user} />
       </BrowserRouter>
     </ThemeProvider>
+  </Provider>
   );
 }
 
