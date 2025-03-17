@@ -17,7 +17,7 @@ const ProfileModal = () => {
         <Tooltip title={cookies.token ? 'open Profile' : 'Login to open Profile'}>
           <IconButton sx={{ p: 0 }} onClick={handleAvatarClick}>
             <Avatar
-              alt="Remy Sharp"
+              alt="Profile Pic"
               src="https://www.stagemilk.com/wp-content/uploads/2016/12/Monologues-for-men.png"
             />
           </IconButton>

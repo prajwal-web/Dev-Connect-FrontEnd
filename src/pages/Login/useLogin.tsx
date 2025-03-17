@@ -21,7 +21,6 @@ export const useLogin = () => {
     setError(null);
 
     try {
-      // `${import.meta.env.VITE_HOST_URL}${API_KEYS.employees}/${employee.id}`
       // const response = await fetch(`${import.meta.env.VITE_HOST_URL}${API_KEYS.login}}`, {
       const response = await fetch('https://dev-connect-service.onrender.com/api/auth/login', {
         method: 'POST',

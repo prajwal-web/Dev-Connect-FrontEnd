@@ -5,6 +5,7 @@ import { updateProfileSchema } from '../../components/core/yupValidation';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+// import { ArrowBack } from '@mui/icons-material';
 
 interface Experience {
   title: string;
@@ -20,7 +21,7 @@ interface FormValues {
   email: string;
   bio: string;
   skills: string;
-  experience: Experience[{}];
+  experience: Experience[];
   password: string;
   socialLinks: {
     Github: string;
@@ -156,8 +157,10 @@ const UpdateProfile = () => {
                           value={exp.title}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          error={touched.experience?.[index]?.title && !!errors.experience?.[index]?.title}
-                          helperText={touched.experience?.[index]?.title && errors.experience?.[index]?.title}
+                          // error={touched.experience?.[index]?.title && !!errors.experience?.[index]?.title}
+                          // helperText={touched.experience?.[index]?.title && errors.experience?.[index]?.title}
+                          error={touched.experience?.[index]?.title}
+                          helperText={touched.experience?.[index]?.title}
                         />
                       </Grid2>
                       <Grid2 size={{ xs: 12, sm: 6, lg: 4 }}>
@@ -170,8 +173,10 @@ const UpdateProfile = () => {
                           value={exp.company}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          error={touched.experience?.[index]?.company && !!errors.experience?.[index]?.company}
-                          helperText={touched.experience?.[index]?.company && errors.experience?.[index]?.company}
+                          // error={touched.experience?.[index]?.company && !!errors.experience?.[index]?.company}
+                          // helperText={touched.experience?.[index]?.company && errors.experience?.[index]?.company}
+                          error={touched.experience?.[index]?.company}
+                          helperText={touched.experience?.[index]?.company}
                         />
                       </Grid2>
                       <Grid2 size={{ xs: 12, sm: 6, lg: 4 }}>
@@ -184,8 +189,10 @@ const UpdateProfile = () => {
                           value={exp.location}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          error={touched.experience?.[index]?.location && !!errors.experience?.[index]?.location}
-                          helperText={touched.experience?.[index]?.location && errors.experience?.[index]?.location}
+                          // error={touched.experience?.[index]?.location && !!errors.experience?.[index]?.location}
+                          // helperText={touched.experience?.[index]?.location && errors.experience?.[index]?.location}
+                          error={touched.experience?.[index]?.location}
+                          helperText={touched.experience?.[index]?.location}
                         />
                       </Grid2>
                       <Grid2 size={{ xs: 12, sm: 6, lg: 4 }}>
@@ -199,8 +206,10 @@ const UpdateProfile = () => {
                           value={exp.from}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          error={touched.experience?.[index]?.from && !!errors.experience?.[index]?.from}
-                          helperText={touched.experience?.[index]?.from && errors.experience?.[index]?.from}
+                          // error={touched.experience?.[index]?.from && !!errors.experience?.[index]?.from}
+                          // helperText={touched.experience?.[index]?.from && errors.experience?.[index]?.from}
+                          error={touched.experience?.[index]?.from}
+                          helperText={touched.experience?.[index]?.from}
                         />
                       </Grid2>
                       <Grid2 size={{ xs: 12, sm: 6, lg: 4 }}>
@@ -214,8 +223,10 @@ const UpdateProfile = () => {
                           value={exp.to}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          error={touched.experience?.[index]?.to && !!errors.experience?.[index]?.to}
-                          helperText={touched.experience?.[index]?.to && errors.experience?.[index]?.to}
+                          // error={touched.experience?.[index]?.to && !!errors.experience?.[index]?.to}
+                          // helperText={touched.experience?.[index]?.to && errors.experience?.[index]?.to}
+                          error={touched.experience?.[index]?.to}
+                          helperText={touched.experience?.[index]?.to}
                         />
                       </Grid2>
                       <Grid2 size={{ xs: 12, sm: 12, lg: 12 }}>
@@ -230,10 +241,11 @@ const UpdateProfile = () => {
                           value={exp.description}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          error={touched.experience?.[index]?.description && !!errors.experience?.[index]?.description}
-                          helperText={
-                            touched.experience?.[index]?.description && errors.experience?.[index]?.description
-                          }
+                          // error={touched.experience?.[index]?.description && !!errors.experience?.[index]?.description}
+                          // helperText={
+                          //   touched.experience?.[index]?.description && errors.experience?.[index]?.description
+                          error={touched.experience?.[index]?.description}
+                          helperText={touched.experience?.[index]?.description}
                         />
                       </Grid2>
                     </React.Fragment>
@@ -278,16 +290,6 @@ const UpdateProfile = () => {
                 error={touched.password && !!errors.password}
                 helperText={touched.password && errors.password}
               />
-
-              {/* <Button
-                variant="outlined"
-                sx={{ color: 'black', border: '1px solid black', fontSize: '12px', width: '200px' }}
-                component="label"
-                fullWidth
-              >
-                Upload Profile Picture
-                <input type="file" hidden />
-              </Button> */}
               <Box display="flex" flexDirection="row" alignItems="center" gap={2}>
                 <Button
                   component="label"
@@ -308,6 +310,24 @@ const UpdateProfile = () => {
           );
         }}
       </Formik>
+      {/* <Link to="/profile">
+        <Button
+          startIcon={<ArrowBack />}
+          variant="contained"
+          color="inherit"
+          fullWidth
+          sx={{
+            mt: 2,
+            position: 'fixed',
+            top: 60,
+            right: 55,
+            width: 'auto',
+            borderColor: 'gray'
+          }}
+        >
+          Go Back
+        </Button>
+      </Link> */}
     </Container>
   );
 };

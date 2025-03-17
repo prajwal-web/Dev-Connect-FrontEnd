@@ -128,12 +128,12 @@ const CreatePosts = () => {
               variant="outlined"
               color="inherit"
               startIcon={<CloudUploadIcon />}
-              sx={{ height: '30px' }}
+              sx={{ height: '30px', fontSize: { xs: '12px' }, width: { xs: '130px' } }}
             >
               Choose file
               <VisuallyHiddenInput type="file" onChange={handleFileChange} />
             </Button>
-            <Typography>{fileName}</Typography>
+            <Typography sx={{ fontSize: { xs: '13px' } }}>{fileName}</Typography>
           </Box>
           <TextField
             fullWidth

@@ -1,26 +1,36 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import type { RootState } from '../store'
+/* eslint-disable react-refresh/only-export-components */
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import type { RootState } from '../store';
 
 export interface CounterState {
-  value: boolean,
+  value: boolean;
+  isLogin: boolean;
+  snackBar: boolean;
 }
 const initialState: CounterState = {
-  value: false
-}
+  value: false,
+  isLogin: true,
+  snackBar: false
+};
 
 export const ToggleSlice = createSlice({
   name: 'mode',
   initialState,
   reducers: {
     darkMode: (state, action: PayloadAction<boolean>) => {
-      state.value = action.payload
+      state.value = action.payload;
+    },
+    loggedIn: (state, action: PayloadAction<boolean>) => {
+      state.isLogin = action.payload;
+    },
+    snackbar: (state, action: PayloadAction<boolean>) => {
+      state.snackBar = action.payload;
     }
   }
-})
+});
 
-export const { darkMode } = ToggleSlice.actions;
+export const { darkMode, loggedIn, snackbar } = ToggleSlice.actions;
 
-// Other code such as selectors can use the imported `RootState` type
-export const selectCount = (state: RootState) => state.mode.value
+export const selectCount = (state: RootState) => state.mode.value;
 
-export default ToggleSlice.reducer
+export default ToggleSlice.reducer;
