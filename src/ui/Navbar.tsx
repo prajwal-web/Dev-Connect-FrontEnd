@@ -39,7 +39,12 @@ export default function Navbar({ toggletheme, isMode }: NavbarProps) {
           <Typography
             variant="h6"
             component="div"
-            sx={{ flexGrow: 1, cursor: 'pointer' }}
+            sx={{
+              flexGrow: 1,
+              cursor: 'pointer',
+              fontSize: { xs: '14px', sm: '22px', lg: '18px' },
+              fontFamily: 'cursive'
+            }}
             onClick={() => navigate('/posts')}
           >
             Blog Post
@@ -47,7 +52,17 @@ export default function Navbar({ toggletheme, isMode }: NavbarProps) {
 
           {cookies.token && userName ? (
             <>
-              <Typography color="inherit" sx={{ flexGrow: 1, textAlign: 'right', marginRight: 2 }}>
+              <Typography
+                color="inherit"
+                sx={{
+                  flexGrow: 1,
+                  textAlign: 'right',
+                  marginRight: 2,
+                  fontSize: { xs: '14px', sm: '22px', lg: '18px' },
+                  fontFamily: 'cursive',
+                  marginLeft: { xs: 1.5 }
+                }}
+              >
                 Welcome , {userName}
               </Typography>
             </>

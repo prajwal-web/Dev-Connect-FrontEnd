@@ -36,7 +36,6 @@ export const updateProfileSchema = Yup.object({
       description: Yup.string().required('Description is required')
     })
   ),
-  password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
   socialLinks: Yup.object({
     Github: Yup.string().required('Github Link is required'),
     LinkedIn: Yup.string().required('LinkedIn Link is required')

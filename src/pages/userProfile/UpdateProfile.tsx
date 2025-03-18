@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { TextField, Button, Box, Grid2, Typography, Container, styled } from '@mui/material';
 import { Formik, Form } from 'formik';
-import { updateProfileSchema } from '../../components/core/yupValidation';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-// import { ArrowBack } from '@mui/icons-material';
+import { useCookies } from 'react-cookie';
 
 interface Experience {
   title: string;
@@ -22,26 +21,32 @@ interface FormValues {
   bio: string;
   skills: string;
   experience: Experience[];
-  password: string;
   socialLinks: {
     Github: string;
     LinkedIn: string;
   };
   createdAt: string;
   updatedAt: string;
+  profilePicture: File | null;
 }
 
 const UpdateProfile = () => {
   const [fileName, setFileName] = useState('No file chosen');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const [cookies, setCookie] = useCookies(['token', 'user', 'userName']);
 
-  const handleFileChange = (event: { target: { files: any } }) => {
+  const handleFileChange = (event: { target: { files: any } }, setFieldValue: any) => {
     const files = event.target.files;
     if (files.length > 0) {
       setFileName(`${files[0].name} `);
+      setFieldValue('profilePicture', files[0]);
     } else {
       setFileName('No file chosen');
+      setFieldValue('profilePicture', null);
     }
   };
+
   const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
     clipPath: 'inset(50%)',
@@ -53,8 +58,65 @@ const UpdateProfile = () => {
     whiteSpace: 'nowrap',
     width: 1
   });
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+
+  const handleSubmit = async (values: FormValues) => {
+    setLoading(true);
+    console.log('values ', values);
+
+    try {
+      const formData = new FormData();
+      formData.append('name', values.name);
+      formData.append('email', values.email);
+      formData.append('bio', values.bio);
+      formData.append('skills', values.skills);
+      formData.append('socialLinks', JSON.stringify(values.socialLinks));
+
+      values.experience.forEach((exp, index) => {
+        formData.append(`experience[${index}].title`, exp.title);
+        formData.append(`experience[${index}].company`, exp.company);
+        formData.append(`experience[${index}].location`, exp.location);
+        formData.append(`experience[${index}].from`, exp.from);
+        formData.append(`experience[${index}].to`, exp.to);
+        formData.append(`experience[${index}].description`, exp.description);
+      });
+
+      if (values.profilePicture) {
+        formData.append('profilePicture', values.profilePicture as File, values.profilePicture?.name);
+      }
+
+      console.log('FormData being sent:');
+      formData.forEach((value, key) => {
+        console.log(`${key}:`, value);
+      });
+      const myHeaders = new Headers();
+      myHeaders.append('Authorization', `Bearer ${cookies.token}`);
+
+      const requestOptions: any = {
+        method: 'PUT',
+        headers: myHeaders,
+        body: formData,
+        redirect: 'follow'
+      };
+
+      const response = await fetch('https://dev-connect-service.onrender.com/api/users/profile', requestOptions);
+
+      if (!response.ok) {
+        const errorDetails = await response.text();
+        throw new Error(`Failed to update profile: ${errorDetails}`);
+      }
+
+      const updatedUser = await response.json();
+      setCookie('user', updatedUser, { path: '/' });
+      setTimeout(() => {
+        navigate('/profile');
+      }, 1000);
+    } catch (error: any) {
+      console.error('Error details:', error);
+      setLoading(false);
+      alert(`Failed to update profile. Error: ${error.message}`);
+    }
+  };
+
   return (
     <Container maxWidth="md" sx={{ marginBottom: 2 }}>
       <Typography variant="h5" gutterBottom>
@@ -68,25 +130,14 @@ const UpdateProfile = () => {
           bio: '',
           skills: '',
           experience: [{ title: '', company: '', location: '', from: '', to: '', description: '' }],
-          password: '',
           socialLinks: { Github: '', LinkedIn: '' },
           createdAt: '',
-          updatedAt: ''
+          updatedAt: '',
+          profilePicture: null
         }}
-        validationSchema={updateProfileSchema}
-        onSubmit={(values) => {
-          console.log('Form Values:', values);
-          setLoading(true);
-          setTimeout(() => {
-            navigate('/profile');
-          }, 2000);
-        }}
+        onSubmit={handleSubmit}
       >
-        {({ values, handleChange, handleBlur, errors, touched }) => {
-          console.log('Form Values:', values);
-          console.log('Form Errors:', errors);
-          console.log('Touched Fields:', touched);
-
+        {({ values, handleChange, handleBlur, errors, touched, setFieldValue }) => {
           return (
             <Form>
               <TextField
@@ -157,8 +208,6 @@ const UpdateProfile = () => {
                           value={exp.title}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          // error={touched.experience?.[index]?.title && !!errors.experience?.[index]?.title}
-                          // helperText={touched.experience?.[index]?.title && errors.experience?.[index]?.title}
                           error={touched.experience?.[index]?.title}
                           helperText={touched.experience?.[index]?.title}
                         />
@@ -173,8 +222,6 @@ const UpdateProfile = () => {
                           value={exp.company}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          // error={touched.experience?.[index]?.company && !!errors.experience?.[index]?.company}
-                          // helperText={touched.experience?.[index]?.company && errors.experience?.[index]?.company}
                           error={touched.experience?.[index]?.company}
                           helperText={touched.experience?.[index]?.company}
                         />
@@ -189,8 +236,6 @@ const UpdateProfile = () => {
                           value={exp.location}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          // error={touched.experience?.[index]?.location && !!errors.experience?.[index]?.location}
-                          // helperText={touched.experience?.[index]?.location && errors.experience?.[index]?.location}
                           error={touched.experience?.[index]?.location}
                           helperText={touched.experience?.[index]?.location}
                         />
@@ -206,8 +251,6 @@ const UpdateProfile = () => {
                           value={exp.from}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          // error={touched.experience?.[index]?.from && !!errors.experience?.[index]?.from}
-                          // helperText={touched.experience?.[index]?.from && errors.experience?.[index]?.from}
                           error={touched.experience?.[index]?.from}
                           helperText={touched.experience?.[index]?.from}
                         />
@@ -223,8 +266,6 @@ const UpdateProfile = () => {
                           value={exp.to}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          // error={touched.experience?.[index]?.to && !!errors.experience?.[index]?.to}
-                          // helperText={touched.experience?.[index]?.to && errors.experience?.[index]?.to}
                           error={touched.experience?.[index]?.to}
                           helperText={touched.experience?.[index]?.to}
                         />
@@ -241,9 +282,6 @@ const UpdateProfile = () => {
                           value={exp.description}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          // error={touched.experience?.[index]?.description && !!errors.experience?.[index]?.description}
-                          // helperText={
-                          //   touched.experience?.[index]?.description && errors.experience?.[index]?.description
                           error={touched.experience?.[index]?.description}
                           helperText={touched.experience?.[index]?.description}
                         />
@@ -252,6 +290,7 @@ const UpdateProfile = () => {
                   ))}
                 </Grid2>
               </Box>
+
               <Typography>Social Links</Typography>
               <TextField
                 label="Github*"
@@ -277,19 +316,6 @@ const UpdateProfile = () => {
                 helperText={touched.socialLinks?.LinkedIn && errors.socialLinks?.LinkedIn}
               />
 
-              <TextField
-                label="Password*"
-                name="password"
-                type="password"
-                variant="outlined"
-                fullWidth
-                margin="normal"
-                value={values.password}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={touched.password && !!errors.password}
-                helperText={touched.password && errors.password}
-              />
               <Box display="flex" flexDirection="row" alignItems="center" gap={2}>
                 <Button
                   component="label"
@@ -299,7 +325,7 @@ const UpdateProfile = () => {
                   sx={{ height: '30px' }}
                 >
                   choose a file
-                  <VisuallyHiddenInput type="file" onChange={handleFileChange} />
+                  <VisuallyHiddenInput type="file" onChange={(e) => handleFileChange(e, setFieldValue)} />
                 </Button>
                 <Typography>{fileName}</Typography>
               </Box>
@@ -310,24 +336,6 @@ const UpdateProfile = () => {
           );
         }}
       </Formik>
-      {/* <Link to="/profile">
-        <Button
-          startIcon={<ArrowBack />}
-          variant="contained"
-          color="inherit"
-          fullWidth
-          sx={{
-            mt: 2,
-            position: 'fixed',
-            top: 60,
-            right: 55,
-            width: 'auto',
-            borderColor: 'gray'
-          }}
-        >
-          Go Back
-        </Button>
-      </Link> */}
     </Container>
   );
 };
