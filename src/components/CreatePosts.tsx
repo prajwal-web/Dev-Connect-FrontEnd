@@ -84,6 +84,9 @@ const CreatePosts = () => {
         images: imageFiles
       };
       createPost(postData);
+      formik.resetForm();
+      setImageSrcs([]);
+      setImageFiles([]);
       handleCloseModal();
     }
   });

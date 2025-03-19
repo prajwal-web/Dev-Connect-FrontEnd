@@ -21,7 +21,6 @@ export const useLogin = () => {
     setError(null);
 
     try {
-      // const response = await fetch(`${import.meta.env.VITE_HOST_URL}${API_KEYS.login}}`, {
       const response = await fetch('https://dev-connect-service.onrender.com/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

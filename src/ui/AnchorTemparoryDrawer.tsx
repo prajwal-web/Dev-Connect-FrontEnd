@@ -50,14 +50,6 @@ export default function AnchorTemporaryDrawer({ openDrawer, setOpenDrawer }: Anc
           </ListItemButton>
         </ListItem>
 
-        {/* {['Update Profile', 'Logout'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))} */}
         <ListItem key="Update Profile" disablePadding>
           <ListItemButton
             onClick={() => {
@@ -73,9 +65,6 @@ export default function AnchorTemporaryDrawer({ openDrawer, setOpenDrawer }: Anc
         <ListItem key="Logout" disablePadding>
           <ListItemButton
             onClick={() => {
-              // setTimeout(() => {
-              //   setopen(true);
-              // }, 3000);
               removeCookie('token');
               navigate('/posts');
             }}
