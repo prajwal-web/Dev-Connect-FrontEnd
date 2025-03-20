@@ -1,11 +1,14 @@
+// LogRegForm.tsx
 import { useState } from 'react';
-import { Box, TextField, Button, Typography, CircularProgress, Snackbar, SnackbarCloseReason } from '@mui/material';
+import { Box, TextField, Button, Typography, CircularProgress } from '@mui/material';
 import { useLogin } from './Login/useLogin';
 import { useRegister } from './Register/useRegister';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import yupValidation from '../components/core/yupValidation';
 import LoginIcon from '@mui/icons-material/Login';
 import { HowToReg } from '@mui/icons-material';
+import { useDispatch } from 'react-redux';
+import { snackbar, setSnackbarMessage } from '../redux/slices/ToogleSlice';
 import '../styles/App.css';
 
 interface LogRegFormProps {
@@ -15,8 +18,7 @@ interface LogRegFormProps {
 
 const LogRegForm = ({ setOpenModal, setUserName }: LogRegFormProps) => {
   const [isLogin, setIsLogin] = useState(true);
-  const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const dispatch = useDispatch();
 
   const { handleLogin, loading: loginLoading, error: loginError } = useLogin();
   const { handleRegister, loading: registerLoading, error: registerError } = useRegister();
@@ -30,48 +32,41 @@ const LogRegForm = ({ setOpenModal, setUserName }: LogRegFormProps) => {
           console.log(value);
           if (value && value.token) {
             setUserName(value.name);
-            setSnackbarMessage('Login successful!');
-            setOpenSnackbar(true);
+            dispatch(setSnackbarMessage('Login successful!'));
+            dispatch(snackbar(true));
             resetForm();
             setTimeout(() => {
               setOpenModal(false);
             }, 1000);
           } else {
-            setSnackbarMessage('Login failed. Incorrect email or password.');
-            setOpenSnackbar(true);
+            dispatch(setSnackbarMessage('Login failed. Incorrect email or password.'));
+            dispatch(snackbar(true));
           }
         })
         .catch(() => {
-          setSnackbarMessage('Login failed. Please try again.');
-          setOpenSnackbar(true);
+          dispatch(setSnackbarMessage('Login failed. Please try again.'));
+          dispatch(snackbar(true));
         });
     } else {
       handleRegister(values.username, values.email, values.password)
         .then((value) => {
           if (value && values) {
-            setSnackbarMessage('Registration successful!');
-            setOpenSnackbar(true);
+            dispatch(setSnackbarMessage('Registration successful!'));
+            dispatch(snackbar(true));
             resetForm();
             setTimeout(() => {
               setIsLogin(true);
             }, 2000);
           } else {
-            setSnackbarMessage('Registration failed. Please try again.');
-            setOpenSnackbar(true);
+            dispatch(setSnackbarMessage('Registration failed. Please try again.'));
+            dispatch(snackbar(true));
           }
         })
         .catch(() => {
-          setSnackbarMessage('Registration failed. User already exists.');
-          setOpenSnackbar(true);
+          dispatch(setSnackbarMessage('Registration failed. User already exists.'));
+          dispatch(snackbar(true));
         });
     }
-  };
-
-  const handleCloseSnackbar = (_event: React.SyntheticEvent | Event, reason?: SnackbarCloseReason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpenSnackbar(false);
   };
 
   return (
@@ -150,13 +145,12 @@ const LogRegForm = ({ setOpenModal, setUserName }: LogRegFormProps) => {
           {isLogin ? 'Sign Up' : 'Login'}
         </Button>
       </Typography>
-
-      <Snackbar open={openSnackbar} autoHideDuration={2000} onClose={handleCloseSnackbar} message={snackbarMessage} />
     </Box>
   );
 };
 
 export default LogRegForm;
+
 // /* eslint-disable @typescript-eslint/no-explicit-any */
 // import { useState } from 'react';
 // import { Box, TextField, Button, Typography, CircularProgress, Snackbar, SnackbarCloseReason } from '@mui/material';

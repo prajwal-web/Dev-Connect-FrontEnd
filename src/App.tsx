@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
@@ -12,6 +11,7 @@ import securedFetch from './utils/securedfetch';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 import io from 'socket.io-client';
+import SnackbarComp from './components/SnackbarComp';
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -89,6 +89,7 @@ function App() {
         <CssBaseline />
         <BrowserRouter>
           <Navbar toggletheme={toggleTheme} isMode={isDarkMode} />
+          <SnackbarComp />
           <AppRouter user={user} socket={socket} connected={connected} />
         </BrowserRouter>
       </ThemeProvider>

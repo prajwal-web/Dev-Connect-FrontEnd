@@ -10,12 +10,15 @@ import { useCookies } from 'react-cookie';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { setSnackbarMessage } from '../redux/slices/ToogleSlice';
+import { useDispatch } from 'react-redux';
 
 const CreatePosts = () => {
   const [imageSrcs, setImageSrcs] = useState<string[]>([]);
   const [imageFiles, setImageFiles] = useState<File[]>([]);
-  const [cookies] = useCookies(['token']);
+  const [cookies] = useCookies(['token', 'userName']);
   const [openModal, setOpenModal] = useState(false);
+  const dispatch = useDispatch();
 
   const handleFileChange = (event: { target: { files: FileList | null } }) => {
     if (event.target.files) {
@@ -47,7 +50,7 @@ const CreatePosts = () => {
       imageFiles.forEach((file) => {
         formData.append('images', file);
       });
-      const response = await fetch('https:dev-connect-service.onrender.com/api/posts', {
+      const response = await fetch('https://dev-connect-service.onrender.com/api/posts', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${cookies.token}`
@@ -63,11 +66,12 @@ const CreatePosts = () => {
 
       const jsonData = await response.json();
       console.log('Post created successfully:', jsonData);
+
+      dispatch(setSnackbarMessage(`${cookies.userName} created a post..`));
     } catch (error) {
       console.error('Error occurred during post creation:', error);
     }
   };
-
   const formik = useFormik({
     initialValues: {
       content: '',
@@ -138,7 +142,8 @@ const CreatePosts = () => {
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
+                  position: 'relative'
                 }}
               >
                 <Box

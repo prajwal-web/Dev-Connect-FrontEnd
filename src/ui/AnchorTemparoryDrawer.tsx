@@ -66,6 +66,7 @@ export default function AnchorTemporaryDrawer({ openDrawer, setOpenDrawer }: Anc
           <ListItemButton
             onClick={() => {
               removeCookie('token');
+
               navigate('/posts');
             }}
           >
